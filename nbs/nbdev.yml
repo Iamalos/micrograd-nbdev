@@ -4,6 +4,6 @@ project:
 website:
   title: "micrograd-nbdev"
   site-url: "https://Iamalos.github.io/micrograd-nbdev"
-  description: "microgram with nbdev"
+  description: "micrograd with nbdev"
   repo-branch: main
   repo-url: "https://github.com/Iamalos/micrograd-nbdev"

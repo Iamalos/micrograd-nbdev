@@ -5,4 +5,4 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://Iamalos.github.io',
                 'git_url': 'https://github.com/Iamalos/micrograd-nbdev',
                 'lib_path': 'micrograd_nbdev'},
-  'syms': {'micrograd_nbdev.core': {'micrograd_nbdev.core.foo': ('core.html#foo', 'micrograd_nbdev/core.py')}}}
+  'syms': {'micrograd_nbdev.engine': {'micrograd_nbdev.engine.say_hello': ('engine.html#say_hello', 'micrograd_nbdev/engine.py')}}}
