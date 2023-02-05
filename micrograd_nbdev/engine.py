@@ -9,6 +9,7 @@ class Value:
                  data, # numeric value wrapped by `Value`
                  _children=(), # inputs to a given `Value`
                  _op='', # operation that resulted in a given `Value`
+                 label='' # label for plotting graphs
                 ):
         self.data = data
         self.grad = 0
@@ -29,8 +30,8 @@ class Value:
         out = Value(self.data + other.data, (self, other), _op='+')
         
         def _backward():
-            self.grad = out.grad * 1 # global grad * local grad
-            self.other = out.grad * 1
+            self.grad += out.grad * 1 # global grad * local grad
+            other.grad += out.grad * 1
         
         out._backward = _backward
         return out
@@ -53,8 +54,8 @@ class Value:
         out = Value(self.data * other.data, (self, other), _op='*')
         
         def _backward():
-            self.grad = out.grad * other.data
-            other.grad = out.grad * self.data
+            self.grad += out.grad * other.data
+            other.grad += out.grad * self.data
         
         out._backward = _backward
         return out
@@ -69,7 +70,7 @@ class Value:
         out = Value(self.data ** other, (self,), f"**{other}")
         
         def _backward():
-            self.grad = out.grad * other * self.data**(other-1)
+            self.grad += out.grad * other * self.data**(other-1)
             
         out._backward = _backward
         return out
@@ -91,23 +92,39 @@ class Value:
         out = Value(math.tanh(self.data), (self,) , 'tanh')
         
         def _backward():
-            self.grad = out.grad * (1-out**2)
+            self.grad += out.grad * (1-out**2)
         
         out._backward = _backward
         return out
         
     def relu(self):
         "relu"
-        out = Value(max(self.data,0), (self,), 'relu')
+        out = Value(max(self.data, 0), (self,), 'relu')
         
         def _backward():
-            self.grad = out.grad * (1 if self.data > 0 else 0)
+            self.grad += out.grad * (1 if self.data > 0 else 0)
     
         out._backward = _backward
         return out
     
-    def topo_sort(self):
-        pass
+    def backward(self):
+        topo = []
+        visited = set()
+        
+        def topo_sort(node):
+            if node not in visited:
+                visited.add(node)
+                for child in node._prev:
+                    topo_sort(child)
+                    # ipdb.set_trace()
+                topo.append(node)
+        topo_sort(self)
+        
+        # print(f"Topo list is {topo}")
+        self.grad = 1
+        # need to reverse because it topo returns nodes from left-to-right 
+        for node in reversed(topo):
+            node._backward()
         
     def __repr__(self):
         return f'Value(data={self.data})'
