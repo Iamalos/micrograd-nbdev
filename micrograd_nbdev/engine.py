@@ -11,8 +11,12 @@ class Value:
                  _op='', # operation that resulted in a given `Value`
                 ):
         self.data = data
+        self.grad = 0
+        # Internal variables for graphviz
+        self._backward = lambda : None
         self._prev = set(_children)
-        self.op = _op
+        self._op = _op
+        self.label=''
     
     @staticmethod
     def _wrap(x):
@@ -23,6 +27,12 @@ class Value:
         "self + other"
         other = self._wrap(other)
         out = Value(self.data + other.data, (self, other), _op='+')
+        
+        def _backward():
+            self.grad = out.grad * 1 # global grad * local grad
+            self.other = out.grad * 1
+        
+        out._backward = _backward
         return out
         
     def __radd__(self, other):
@@ -41,6 +51,12 @@ class Value:
         "self * other"
         other = self._wrap(other)
         out = Value(self.data * other.data, (self, other), _op='*')
+        
+        def _backward():
+            self.grad = out.grad * other.data
+            other.grad = out.grad * self.data
+        
+        out._backward = _backward
         return out
     
     def __rmul__(self, other):
@@ -51,6 +67,11 @@ class Value:
         "self ** other. Other should be int or float"
         assert isinstance(other, (int,float)), f"{other} must be int or float"
         out = Value(self.data ** other, (self,), f"**{other}")
+        
+        def _backward():
+            self.grad = out.grad * other * self.data**(other-1)
+            
+        out._backward = _backward
         return out
     
     def __truediv__(self, other):
@@ -67,13 +88,26 @@ class Value:
     
     def tanh(self):
         "tanh"
-        out = Value(math.tanh(self.value), (self,) , 'tanh')
+        out = Value(math.tanh(self.data), (self,) , 'tanh')
+        
+        def _backward():
+            self.grad = out.grad * (1-out**2)
+        
+        out._backward = _backward
         return out
         
     def relu(self):
         "relu"
         out = Value(max(self.data,0), (self,), 'relu')
+        
+        def _backward():
+            self.grad = out.grad * (1 if self.data > 0 else 0)
+    
+        out._backward = _backward
         return out
+    
+    def topo_sort(self):
+        pass
         
     def __repr__(self):
         return f'Value(data={self.data})'

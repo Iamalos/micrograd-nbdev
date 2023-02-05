@@ -27,4 +27,6 @@ d = { 'settings': { 'branch': 'main',
                                                                                       'micrograd_nbdev/engine.py'),
                                         'micrograd_nbdev.engine.Value._wrap': ('engine.html#value._wrap', 'micrograd_nbdev/engine.py'),
                                         'micrograd_nbdev.engine.Value.relu': ('engine.html#value.relu', 'micrograd_nbdev/engine.py'),
-                                        'micrograd_nbdev.engine.Value.tanh': ('engine.html#value.tanh', 'micrograd_nbdev/engine.py')}}}
+                                        'micrograd_nbdev.engine.Value.tanh': ('engine.html#value.tanh', 'micrograd_nbdev/engine.py'),
+                                        'micrograd_nbdev.engine.Value.topo_sort': ( 'engine.html#value.topo_sort',
+                                                                                    'micrograd_nbdev/engine.py')}}}
