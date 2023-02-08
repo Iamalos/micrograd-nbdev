@@ -31,4 +31,12 @@ d = { 'settings': { 'branch': 'main',
                                         'micrograd_nbdev.engine.Value.backward': ( 'engine.html#value.backward',
                                                                                    'micrograd_nbdev/engine.py'),
                                         'micrograd_nbdev.engine.Value.relu': ('engine.html#value.relu', 'micrograd_nbdev/engine.py'),
-                                        'micrograd_nbdev.engine.Value.tanh': ('engine.html#value.tanh', 'micrograd_nbdev/engine.py')}}}
+                                        'micrograd_nbdev.engine.Value.tanh': ('engine.html#value.tanh', 'micrograd_nbdev/engine.py')},
+            'micrograd_nbdev.nn': { 'micrograd_nbdev.nn.Module': ('nn.html#module', 'micrograd_nbdev/nn.py'),
+                                    'micrograd_nbdev.nn.Module.parameters': ('nn.html#module.parameters', 'micrograd_nbdev/nn.py'),
+                                    'micrograd_nbdev.nn.Module.zero_grad': ('nn.html#module.zero_grad', 'micrograd_nbdev/nn.py'),
+                                    'micrograd_nbdev.nn.Neuron': ('nn.html#neuron', 'micrograd_nbdev/nn.py'),
+                                    'micrograd_nbdev.nn.Neuron.__call__': ('nn.html#neuron.__call__', 'micrograd_nbdev/nn.py'),
+                                    'micrograd_nbdev.nn.Neuron.__init__': ('nn.html#neuron.__init__', 'micrograd_nbdev/nn.py'),
+                                    'micrograd_nbdev.nn.Neuron.__repr__': ('nn.html#neuron.__repr__', 'micrograd_nbdev/nn.py'),
+                                    'micrograd_nbdev.nn.Neuron.parameters': ('nn.html#neuron.parameters', 'micrograd_nbdev/nn.py')}}}
