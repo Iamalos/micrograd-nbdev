@@ -4,3 +4,4 @@ website:
       - index.ipynb
       - 00_engine.ipynb
       - 01_diagram.ipynb
+      - 02_nn.ipynb

@@ -39,11 +39,9 @@ plt.scatter(X[:,0], X[:,1], c=y, s=20, cmap='jet')
 ``` python
 # initialize a model with 2 features
 model = MLP(2,[16, 16, 1])
-print(model)
 print("number of parameters", len(model.parameters()))
 ```
 
-    MLP of [Layer of [ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2), ReLU Neuron(2)], Layer of [ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16), ReLU Neuron(16)], Layer of [Linear Neuron(16)]]
     number of parameters 337
 
 ``` python
@@ -108,29 +106,3 @@ for k in range(100):
     step: 70 | total_loss: 0.014229870065926908 | acc 100.0%
     step: 80 | total_loss: 0.012318500800515816 | acc 100.0%
     step: 90 | total_loss: 0.010984458327280174 | acc 100.0%
-
-``` python
-h=0.25
-
-x_min, x_max = np.min(X[:,0]) - 1, np.max(X[:,0]) + 1
-y_min, y_max = np.min(X[:,1]) - 1, np.max(X[:,1]) + 1
-
-xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-# ravel flattens the array: xx.shape = (a,b), xx.ravel().shape = (a*b,)
-Xmesh = np.c_[xx.ravel(), yy.ravel()]
-inputs = [list(map(Value, xrow)) for xrow in Xmesh]
-scores = list(map(model, inputs))
-Z = np.array([s.data > 0 for s in scores])
-Z = Z.reshape(xx.shape)
-
-fig = plt.figure()
-plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral, alpha=0.8)
-plt.scatter(X[:,0], X[:,1], c=y, s=40, cmap=plt.cm.Spectral)
-
-plt.xlim(xx.min(), xx.max())
-plt.ylim(yy.min(), yy.max())
-```
-
-    (-1.548639298268643, 1.951360701731357)
-
-![](index_files/figure-commonmark/cell-7-output-2.png)
