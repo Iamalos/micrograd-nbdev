@@ -127,4 +127,4 @@ class Value:
             node._backward()
         
     def __repr__(self):
-        return f'Value(data={self.data})'
+        return f'Value(data={self.data}, grad={self.grad})'
